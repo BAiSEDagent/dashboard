@@ -3,247 +3,304 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BAiSED | Command Center</title>
+    <title>BAiSED Command Center</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-primary: #0d1117;
-            --bg-secondary: #161b22;
-            --bg-tertiary: #21262d;
-            --border: #30363d;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --accent-blue: #58a6ff;
-            --accent-green: #238636;
-            --accent-yellow: #d29922;
-            --accent-red: #da3633;
-            --accent-purple: #8957e5;
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --border: #2a2a2a;
+            --border-hover: #3a3a3a;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-tertiary: #71717a;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --accent-green: #10b981;
+            --accent-yellow: #f59e0b;
+            --accent-red: #ef4444;
+            --accent-purple: #8b5cf6;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        body {
+
+        html {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg-primary);
             color: var(--text-primary);
-            min-height: 100vh;
             line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
         }
-        
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Layout */
         .app {
-            max-width: 1800px;
-            margin: 0 auto;
-            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
-        
+
         /* Header */
         .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 16px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 24px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            margin-bottom: 24px;
         }
-        
+
         .brand {
             display: flex;
             align-items: center;
             gap: 16px;
         }
-        
-        .logo {
+
+        .brand-icon {
             width: 40px;
             height: 40px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: 8px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 18px;
-        }
-        
-        .brand-text h1 {
             font-size: 20px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+            box-shadow: var(--shadow);
         }
-        
-        .brand-text p {
+
+        .brand-text h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 2px;
+        }
+
+        .brand-text span {
             font-size: 13px;
             color: var(--text-secondary);
+            font-weight: 400;
         }
-        
+
         .header-actions {
             display: flex;
             gap: 12px;
         }
-        
+
         .btn {
-            padding: 10px 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
             border-radius: 8px;
-            border: 1px solid var(--border);
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
             font-size: 14px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .btn:hover {
-            background: var(--border);
-        }
-        
-        .btn-primary {
-            background: var(--accent-green);
-            border-color: var(--accent-green);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background: #2ea043;
-        }
-        
-        /* Filters */
-        .filters {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-            padding: 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            overflow-x: auto;
-        }
-        
-        .filter-btn {
-            padding: 8px 16px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid transparent;
             background: transparent;
             color: var(--text-secondary);
+        }
+
+        .btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue-hover);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow);
+        }
+
+        /* Filters */
+        .filters-bar {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+        }
+
+        .filters-inner {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px;
+            padding: 16px 0;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .filters-inner::-webkit-scrollbar {
+            display: none;
+        }
+
+        .filter-chip {
+            padding: 8px 16px;
+            border-radius: 20px;
             font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
             white-space: nowrap;
-        }
-        
-        .filter-btn:hover {
+            border: 1px solid var(--border);
             background: var(--bg-tertiary);
+            color: var(--text-secondary);
+        }
+
+        .filter-chip:hover {
+            border-color: var(--border-hover);
             color: var(--text-primary);
         }
-        
-        .filter-btn.active {
+
+        .filter-chip.active {
             background: var(--accent-blue);
             border-color: var(--accent-blue);
             color: white;
         }
-        
-        /* Board */
+
+        /* Main Board */
+        .main {
+            flex: 1;
+            padding: 24px 32px;
+            overflow-x: auto;
+        }
+
         .board {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(4, minmax(320px, 1fr));
+            gap: 24px;
+            max-width: 1920px;
+            margin: 0 auto;
+            min-width: 1200px;
         }
-        
-        @media (max-width: 1400px) {
-            .board { grid-template-columns: repeat(2, 1fr); }
-        }
-        
-        @media (max-width: 768px) {
-            .board { grid-template-columns: 1fr; }
-        }
-        
+
+        /* Columns */
         .column {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 12px;
-            min-height: 600px;
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
+            max-height: calc(100vh - 220px);
         }
-        
+
         .column-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 16px 20px;
+            padding: 20px;
             border-bottom: 1px solid var(--border);
         }
-        
+
         .column-title {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-        
-        .column-dot {
+
+        .status-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
+            box-shadow: 0 0 8px currentColor;
         }
-        
-        .backlog .column-dot { background: var(--text-secondary); }
-        .todo .column-dot { background: var(--accent-blue); }
-        .inprogress .column-dot { background: var(--accent-yellow); }
-        .done .column-dot { background: var(--accent-green); }
-        
-        .column-header h3 {
+
+        .column[data-status="backlog"] .status-dot { background: var(--text-tertiary); color: var(--text-tertiary); }
+        .column[data-status="todo"] .status-dot { background: var(--accent-blue); color: var(--accent-blue); }
+        .column[data-status="inprogress"] .status-dot { background: var(--accent-yellow); color: var(--accent-yellow); }
+        .column[data-status="done"] .status-dot { background: var(--accent-green); color: var(--accent-green); }
+
+        .column-title h2 {
             font-size: 14px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
-        .column-count {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
-            padding: 4px 10px;
+
+        .count-badge {
             background: var(--bg-tertiary);
-            border-radius: 12px;
             color: var(--text-secondary);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            min-width: 28px;
+            text-align: center;
         }
-        
+
         .column-content {
-            padding: 12px;
             flex: 1;
             overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        
+
+        .column-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .column-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .column-content::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+
         /* Cards */
         .card {
-            background: var(--bg-tertiary);
+            background: var(--bg-card);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 16px;
-            margin-bottom: 12px;
             cursor: grab;
-            transition: all 0.2s;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
         }
-        
+
         .card:hover {
-            border-color: var(--accent-blue);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            border-color: var(--border-hover);
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
         }
-        
+
         .card.dragging {
             opacity: 0.5;
+            cursor: grabbing;
         }
-        
+
         .card-header {
             display: flex;
             justify-content: space-between;
@@ -251,256 +308,335 @@
             gap: 12px;
             margin-bottom: 12px;
         }
-        
+
         .card-title {
             font-size: 14px;
             font-weight: 500;
             line-height: 1.5;
+            color: var(--text-primary);
             flex: 1;
         }
-        
-        .card-delete {
+
+        .card-menu {
             background: none;
             border: none;
-            color: var(--text-secondary);
+            color: var(--text-tertiary);
             cursor: pointer;
             padding: 4px;
-            border-radius: 4px;
+            border-radius: 6px;
             transition: all 0.2s;
+            opacity: 0;
         }
-        
-        .card-delete:hover {
-            background: rgba(218, 54, 51, 0.2);
+
+        .card:hover .card-menu {
+            opacity: 1;
+        }
+
+        .card-menu:hover {
+            background: var(--bg-tertiary);
             color: var(--accent-red);
         }
-        
-        .card-meta {
+
+        .card-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 6px;
             margin-bottom: 12px;
         }
-        
+
         .tag {
             font-size: 11px;
             font-weight: 600;
             padding: 4px 10px;
-            border-radius: 20px;
+            border-radius: 6px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        
-        .tag-cogent { background: rgba(88, 166, 255, 0.15); color: var(--accent-blue); }
-        .tag-agenthq { background: rgba(137, 87, 229, 0.15); color: var(--accent-purple); }
-        .tag-x402 { background: rgba(210, 153, 34, 0.15); color: var(--accent-yellow); }
-        .tag-content { background: rgba(139, 148, 158, 0.15); color: var(--text-secondary); }
-        .tag-ops { background: rgba(48, 54, 61, 0.5); color: var(--text-secondary); }
-        
-        .tag-revenue { background: rgba(35, 134, 54, 0.2); color: #3fb950; }
-        .tag-urgent { background: rgba(218, 54, 51, 0.2); color: var(--accent-red); }
-        .tag-blocked { background: rgba(210, 153, 34, 0.2); color: var(--accent-yellow); }
-        .tag-normal { background: var(--bg-secondary); color: var(--text-secondary); }
-        
+
+        .tag-cogent { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+        .tag-agenthq { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+        .tag-x402 { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .tag-content { background: rgba(161, 161, 170, 0.15); color: #d4d4d8; }
+        .tag-ops { background: rgba(113, 113, 122, 0.15); color: #a1a1aa; }
+
+        .tag-revenue { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .tag-urgent { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+        .tag-blocked { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .tag-normal { background: rgba(113, 113, 122, 0.1); color: #a1a1aa; }
+
         .card-footer {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 12px;
-            color: var(--text-secondary);
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
         }
-        
+
         .card-id {
-            font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
+            color: var(--text-tertiary);
+            font-family: monospace;
         }
-        
+
+        .card-date {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
         /* Modal */
-        .modal-overlay {
+        .modal-backdrop {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            backdrop-filter: blur(4px);
-            justify-content: center;
-            align-items: center;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
             z-index: 1000;
             padding: 24px;
+            overflow-y: auto;
         }
-        
-        .modal-overlay.active {
+
+        .modal-backdrop.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        
+
         .modal {
             background: var(--bg-secondary);
             border: 1px solid var(--border);
-            border-radius: 16px;
+            border-radius: 20px;
             width: 100%;
             max-width: 480px;
-            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            animation: modal-in 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
+        @keyframes modal-in {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
         .modal-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
+            padding: 24px 24px 0;
         }
-        
+
         .modal-header h2 {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
         }
-        
+
         .modal-body {
             padding: 24px;
         }
-        
-        .form-group {
+
+        .form-field {
             margin-bottom: 20px;
         }
-        
-        .form-group label {
+
+        .form-field label {
             display: block;
             margin-bottom: 8px;
             font-size: 13px;
             font-weight: 500;
             color: var(--text-secondary);
         }
-        
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
+
+        .form-field input,
+        .form-field textarea,
+        .form-field select {
             width: 100%;
-            padding: 12px;
-            background: var(--bg-primary);
+            padding: 12px 16px;
+            background: var(--bg-tertiary);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 10px;
             color: var(--text-primary);
             font-size: 14px;
-            transition: border-color 0.2s;
+            transition: all 0.2s;
         }
-        
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+
+        .form-field input:focus,
+        .form-field textarea:focus,
+        .form-field select:focus {
             outline: none;
             border-color: var(--accent-blue);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
-        
-        .form-group textarea {
+
+        .form-field textarea {
             min-height: 100px;
             resize: vertical;
         }
-        
+
         .modal-footer {
             display: flex;
-            gap: 12px;
             justify-content: flex-end;
-            padding: 20px 24px;
-            border-top: 1px solid var(--border);
+            gap: 12px;
+            padding: 0 24px 24px;
         }
-        
-        /* Drag and drop */
+
+        /* Drag states */
         .column-content.drag-over {
-            background: rgba(88, 166, 255, 0.05);
+            background: rgba(59, 130, 246, 0.05);
+            border-radius: 8px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--border-hover);
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .header-inner,
+            .filters-bar,
+            .main {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .board {
+                grid-template-columns: 1fr;
+                min-width: auto;
+            }
+
+            .column {
+                max-height: none;
+            }
         }
     </style>
 </head>
 <body>
     <div class="app">
         <header class="header">
-            <div class="brand">
-                <div class="logo">B</div>
-                <div class="brand-text">
-                    <h1>BAiSED Command Center</h1>
-                    <p>Projects · Communications · Revenue Tracking</p>
+            <div class="header-inner">
+                <div class="brand">
+                    <div class="brand-icon">B</div>
+                    <div class="brand-text">
+                        <h1>BAiSED Command Center</h1>
+                        <span>Project Management & Revenue Tracking</span>
+                    </div>
                 </div>
-            </div>
-            <div class="header-actions">
-                <button class="btn" onclick="exportData()">📥 Export</button>
-                <button class="btn btn-primary" onclick="openModal()">+ New Task</button>
+                <div class="header-actions">
+                    <button class="btn" onclick="exportTasks()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="7 10 12 15 17 10"/>
+                            <line x1="12" y1="15" x2="12" y2="3"/>
+                        </svg>
+                        Export
+                    </button>
+                    <button class="btn btn-primary" onclick="openModal()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"/>
+                            <line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        New Task
+                    </button>
+                </div>
             </div>
         </header>
-        
-        <div class="filters">
-            <button class="filter-btn active" onclick="filterProject('all')">All Projects</button>
-            <button class="filter-btn" onclick="filterProject('cogent')">🎯 Cogent</button>
-            <button class="filter-btn" onclick="filterProject('agenthq')">🤖 AgentHQ</button>
-            <button class="filter-btn" onclick="filterProject('x402')">💰 x402</button>
-            <button class="filter-btn" onclick="filterProject('content')">✍️ Content</button>
-            <button class="filter-btn" onclick="filterProject('ops')">⚙️ Ops</button>
-        </div>
-        
-        <div class="board">
-            <div class="column backlog">
-                <div class="column-header">
-                    <div class="column-title">
-                        <div class="column-dot"></div>
-                        <h3>Backlog</h3>
-                    </div>
-                    <span class="column-count" id="count-backlog">0</span>
-                </div>
-                <div class="column-content" id="backlog-tasks" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)"></div>
-            </div>
-            
-            <div class="column todo">
-                <div class="column-header">
-                    <div class="column-title">
-                        <div class="column-dot"></div>
-                        <h3>To Do</h3>
-                    </div>
-                    <span class="column-count" id="count-todo">0</span>
-                </div>
-                <div class="column-content" id="todo-tasks" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)"></div>
-            </div>
-            
-            <div class="column inprogress">
-                <div class="column-header">
-                    <div class="column-title">
-                        <div class="column-dot"></div>
-                        <h3>In Progress</h3>
-                    </div>
-                    <span class="column-count" id="count-inprogress">0</span>
-                </div>
-                <div class="column-content" id="inprogress-tasks" ondrop="drop(event, 'inprogress')" ondragover="allowDrop(event)"></div>
-            </div>
-            
-            <div class="column done">
-                <div class="column-header">
-                    <div class="column-title">
-                        <div class="column-dot"></div>
-                        <h3>Done</h3>
-                    </div>
-                    <span class="column-count" id="count-done">0</span>
-                </div>
-                <div class="column-content" id="done-tasks" ondrop="drop(event, 'done')" ondragover="allowDrop(event)"></div>
+
+        <div class="filters-bar">
+            <div class="filters-inner">
+                <div class="filter-chip active" onclick="filterBy('all')">All Projects</div>
+                <div class="filter-chip" onclick="filterBy('cogent')">🎯 Cogent</div>
+                <div class="filter-chip" onclick="filterBy('agenthq')">🤖 AgentHQ</div>
+                <div class="filter-chip" onclick="filterBy('x402')">💰 x402</div>
+                <div class="filter-chip" onclick="filterBy('content')">✍️ Content</div>
+                <div class="filter-chip" onclick="filterBy('ops')">⚙️ Ops</div>
             </div>
         </div>
+
+        <main class="main">
+            <div class="board">
+                <div class="column" data-status="backlog">
+                    <div class="column-header">
+                        <div class="column-title">
+                            <div class="status-dot"></div>
+                            <h2>Backlog</h2>
+                        </div>
+                        <span class="count-badge" id="count-backlog">0</span>
+                    </div>
+                    <div class="column-content" id="backlog-tasks" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div>
+                </div>
+
+                <div class="column" data-status="todo">
+                    <div class="column-header">
+                        <div class="column-title">
+                            <div class="status-dot"></div>
+                            <h2>To Do</h2>
+                        </div>
+                        <span class="count-badge" id="count-todo">0</span>
+                    </div>
+                    <div class="column-content" id="todo-tasks" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div>
+                </div>
+
+                <div class="column" data-status="inprogress">
+                    <div class="column-header">
+                        <div class="column-title">
+                            <div class="status-dot"></div>
+                            <h2>In Progress</h2>
+                        </div>
+                        <span class="count-badge" id="count-inprogress">0</span>
+                    </div>
+                    <div class="column-content" id="inprogress-tasks" ondrop="drop(event, 'inprogress')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div>
+                </div>
+
+                <div class="column" data-status="done">
+                    <div class="column-header">
+                        <div class="column-title">
+                            <div class="status-dot"></div>
+                            <h2>Done</h2>
+                        </div>
+                        <span class="count-badge" id="count-done">0</span>
+                    </div>
+                    <div class="column-content" id="done-tasks" ondrop="drop(event, 'done')" ondragover="allowDrop(event)" ondragleave="dragLeave(event)"></div>
+                </div>
+            </div>
+        </main>
     </div>
-    
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal">
+
+    <div class="modal-backdrop" id="modalBackdrop" onclick="closeModalOnBackdrop(event)">
+        <div class="modal" onclick="event.stopPropagation()">
             <div class="modal-header">
-                <h2>New Task</h2>
+                <h2>Create New Task</h2>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <div class="form-field">
                     <label>Task Title</label>
-                    <input type="text" id="taskTitle" placeholder="What needs to be done?">
+                    <input type="text" id="taskTitle" placeholder="What needs to be done?" autofocus>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label>Project</label>
                     <select id="taskProject">
                         <option value="cogent">🎯 Cogent (Polymarket Trading)</option>
-                        <option value="agenthq">🤖 AgentHQ/BAiSE</option>
+                        <option value="agenthq">🤖 AgentHQ / BAiSE</option>
                         <option value="x402">💰 x402 Paywall</option>
-                        <option value="content">✍️ Content/DevRel</option>
+                        <option value="content">✍️ Content / DevRel</option>
                         <option value="ops">⚙️ Operations</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label>Priority</label>
                     <select id="taskPriority">
                         <option value="revenue">🟢 Revenue</option>
@@ -509,9 +645,9 @@
                         <option value="normal">⚪ Normal</option>
                     </select>
                 </div>
-                <div class="form-group">
+                <div class="form-field">
                     <label>Notes</label>
-                    <textarea id="taskNotes" placeholder="Additional context, links, requirements..."></textarea>
+                    <textarea id="taskNotes" placeholder="Additional context..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
@@ -520,18 +656,20 @@
             </div>
         </div>
     </div>
-    
+
     <script>
+        // Data
         let tasks = JSON.parse(localStorage.getItem('baised-tasks')) || [
             { id: 1, title: 'Fix Cogent live-trader POST 403 error', project: 'cogent', priority: 'urgent', status: 'inprogress', date: '2026-02-15', notes: 'VPN clears GETs but order placement returns 403' },
-            { id: 2, title: 'Deploy Cogent to persistent hosting', project: 'cogent', priority: 'revenue', status: 'todo', date: '2026-02-15', notes: 'Render or Railway for 24/7 uptime' },
+            { id: 2, title: 'Deploy Cogent to EU hosting', project: 'cogent', priority: 'revenue', status: 'todo', date: '2026-02-15', notes: 'Railway EU region to bypass VPN blocks' },
             { id: 3, title: 'First live trade on Polymarket', project: 'cogent', priority: 'revenue', status: 'backlog', date: '2026-02-15', notes: '$5 test order to verify end-to-end' },
             { id: 4, title: 'Wire settlePayment in AgentHQ', project: 'agenthq', priority: 'blocked', status: 'backlog', date: '2026-02-14', notes: 'Publisher flagged as critical' },
             { id: 5, title: 'x402 V3 on-chain proof', project: 'x402', priority: 'blocked', status: 'backlog', date: '2026-02-14', notes: 'Facilitator integration needed' },
         ];
-        
+
         let currentFilter = 'all';
-        
+
+        // Render
         function renderTasks() {
             const columns = ['backlog', 'todo', 'inprogress', 'done'];
             
@@ -554,16 +692,21 @@
                     card.ondragstart = (e) => drag(e, task.id);
                     card.innerHTML = `
                         <div class="card-header">
-                            <div class="card-title">${task.title}</div>
-                            <button class="card-delete" onclick="deleteTask(${task.id})">×</button>
+                            <div class="card-title">${escapeHtml(task.title)}</div>
+                            <button class="card-menu" onclick="deleteTask(${task.id})" title="Delete">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"/>
+                                    <line x1="6" y1="6" x2="18" y2="18"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="card-meta">
+                        <div class="card-tags">
                             <span class="tag tag-${task.project}">${task.project}</span>
                             <span class="tag tag-${task.priority}">${task.priority}</span>
                         </div>
                         <div class="card-footer">
-                            <span class="card-id">#${task.id}</span>
-                            <span>${task.date}</span>
+                            <span class="card-id">#${task.id.toString().slice(-4)}</span>
+                            <span class="card-date">${formatDate(task.date)}</span>
                         </div>
                     `;
                     container.appendChild(card);
@@ -572,56 +715,73 @@
             
             localStorage.setItem('baised-tasks', JSON.stringify(tasks));
         }
-        
-        function openModal() {
-            document.getElementById('modalOverlay').classList.add('active');
-            document.getElementById('taskTitle').focus();
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
         }
-        
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        }
+
+        // Modal
+        function openModal() {
+            document.getElementById('modalBackdrop').classList.add('active');
+            setTimeout(() => document.getElementById('taskTitle').focus(), 100);
+        }
+
         function closeModal() {
-            document.getElementById('modalOverlay').classList.remove('active');
+            document.getElementById('modalBackdrop').classList.remove('active');
             document.getElementById('taskTitle').value = '';
             document.getElementById('taskNotes').value = '';
         }
-        
+
+        function closeModalOnBackdrop(e) {
+            if (e.target.id === 'modalBackdrop') closeModal();
+        }
+
         function addTask() {
             const title = document.getElementById('taskTitle').value.trim();
             if (!title) return;
             
-            const task = {
+            tasks.push({
                 id: Date.now(),
-                title: title,
+                title,
                 project: document.getElementById('taskProject').value,
                 priority: document.getElementById('taskPriority').value,
                 status: 'backlog',
                 date: new Date().toISOString().split('T')[0],
                 notes: document.getElementById('taskNotes').value
-            };
+            });
             
-            tasks.push(task);
             renderTasks();
             closeModal();
         }
-        
+
         function deleteTask(id) {
-            if (confirm('Delete this task?')) {
-                tasks = tasks.filter(t => t.id !== id);
-                renderTasks();
-            }
-        }
-        
-        function filterProject(project) {
-            currentFilter = project;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
+            tasks = tasks.filter(t => t.id !== id);
             renderTasks();
         }
-        
-        function exportData() {
-            const dataStr = JSON.stringify(tasks, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
+
+        // Filter
+        function filterBy(project) {
+            currentFilter = project;
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.toggle('active', 
+                    (project === 'all' && chip.textContent === 'All Projects') ||
+                    chip.textContent.toLowerCase().includes(project)
+                );
+            });
+            renderTasks();
+        }
+
+        // Export
+        function exportTasks() {
+            const data = JSON.stringify(tasks, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -629,45 +789,50 @@
             a.click();
             URL.revokeObjectURL(url);
         }
-        
-        function drag(ev, taskId) {
-            ev.dataTransfer.setData('taskId', taskId);
-            ev.target.classList.add('dragging');
+
+        // Drag and drop
+        function drag(e, taskId) {
+            e.dataTransfer.setData('taskId', taskId);
+            e.target.classList.add('dragging');
         }
-        
-        function allowDrop(ev) {
-            ev.preventDefault();
+
+        function allowDrop(e) {
+            e.preventDefault();
+            e.currentTarget.classList.add('drag-over');
         }
-        
-        function drop(ev, newStatus) {
-            ev.preventDefault();
-            const taskId = parseInt(ev.dataTransfer.getData('taskId'));
+
+        function dragLeave(e) {
+            e.currentTarget.classList.remove('drag-over');
+        }
+
+        function drop(e, newStatus) {
+            e.preventDefault();
+            e.currentTarget.classList.remove('drag-over');
+            
+            const taskId = parseInt(e.dataTransfer.getData('taskId'));
             const task = tasks.find(t => t.id === taskId);
-            if (task) {
+            if (task && task.status !== newStatus) {
                 task.status = newStatus;
-                if (newStatus === 'done') {
-                    task.date = new Date().toISOString().split('T')[0];
-                }
+                if (newStatus === 'done') task.date = new Date().toISOString().split('T')[0];
                 renderTasks();
             }
+            
             document.querySelectorAll('.card').forEach(c => c.classList.remove('dragging'));
         }
-        
-        // Keyboard shortcuts
+
+        // Keyboard
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeModal();
-            if (e.key === 'n' && e.metaKey) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && document.getElementById('modalBackdrop').classList.contains('active')) {
+                addTask();
+            }
+            if ((e.metaKey || e.ctrlKey) && e.key === 'n') {
                 e.preventDefault();
                 openModal();
             }
         });
-        
-        // Close modal on outside click
-        document.getElementById('modalOverlay').addEventListener('click', (e) => {
-            if (e.target.id === 'modalOverlay') closeModal();
-        });
-        
-        // Initialize
+
+        // Init
         renderTasks();
     </script>
 </body>
