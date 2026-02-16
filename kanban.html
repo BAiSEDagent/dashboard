@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BAiSED Command Center</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            color: #3b82f6;
+        }
+        
+        .header .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .add-task-btn {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .add-task-btn:hover {
+            background: #2563eb;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .column {
+            background: #141414;
+            border-radius: 12px;
+            padding: 16px;
+            min-height: 500px;
+        }
+        
+        .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid;
+        }
+        
+        .column-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .column-header .count {
+            background: #333;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+        
+        .backlog .column-header { border-color: #6b7280; }
+        .todo .column-header { border-color: #3b82f6; }
+        .inprogress .column-header { border-color: #f59e0b; }
+        .done .column-header { border-color: #10b981; }
+        
+        .card {
+            background: #1f1f1f;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: grab;
+            border: 1px solid #333;
+            transition: all 0.2s;
+        }
+        
+        .card:hover {
+            border-color: #555;
+            transform: translateY(-2px);
+        }
+        
+        .card.dragging {
+            opacity: 0.5;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 8px;
+        }
+        
+        .card-title {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.4;
+            flex: 1;
+        }
+        
+        .card-delete {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            padding: 4px;
+            margin-left: 8px;
+        }
+        
+        .card-delete:hover {
+            color: #ef4444;
+        }
+        
+        .card-meta {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .tag {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        .tag-cogent { background: #1e3a5f; color: #60a5fa; }
+        .tag-agenthq { background: #1f2937; color: #9ca3af; }
+        .tag-x402 { background: #312e81; color: #a5b4fc; }
+        .tag-revenue { background: #14532d; color: #86efac; }
+        .tag-urgent { background: #7f1d1d; color: #fca5a5; }
+        .tag-blocked { background: #713f12; color: #fde047; }
+        
+        .card-date {
+            font-size: 11px;
+            color: #666;
+            margin-top: 8px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1f1f1f;
+            padding: 24px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+        }
+        
+        .modal-content h2 {
+            margin-bottom: 16px;
+            color: #fff;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            color: #9ca3af;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+        }
+        
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+        
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #333;
+            color: #fff;
+        }
+        
+        .project-filter {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-btn {
+            padding: 8px 16px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #9ca3af;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>🔵 BAiSED Command Center</h1>
+            <div class="subtitle">Projects · Communications · Revenue Tracking</div>
+        </div>
+        <button class="add-task-btn" onclick="openModal()">+ New Task</button>
+    </div>
+    
+    <div class="project-filter">
+        <button class="filter-btn active" onclick="filterProject('all')">All Projects</button>
+        <button class="filter-btn" onclick="filterProject('cogent')">🎯 Cogent</button>
+        <button class="filter-btn" onclick="filterProject('agenthq')">🤖 AgentHQ</button>
+        <button class="filter-btn" onclick="filterProject('x402')">💰 x402</button>
+    </div>
+    
+    <div class="board">
+        <div class="column backlog" ondrop="drop(event, 'backlog')" ondragover="allowDrop(event)">
+            <div class="column-header">
+                <h3>📥 Backlog</h3>
+                <span class="count" id="count-backlog">0</span>
+            </div>
+            <div id="backlog-tasks"></div>
+        </div>
+        
+        <div class="column todo" ondrop="drop(event, 'todo')" ondragover="allowDrop(event)">
+            <div class="column-header">
+                <h3>📝 To Do</h3>
+                <span class="count" id="count-todo">0</span>
+            </div>
+            <div id="todo-tasks"></div>
+        </div>
+        
+        <div class="column inprogress" ondrop="drop(event, 'inprogress')" ondragover="allowDrop(event)">
+            <div class="column-header">
+                <h3>⚡ In Progress</h3>
+                <span class="count" id="count-inprogress">0</span>
+            </div>
+            <div id="inprogress-tasks"></div>
+        </div>
+        
+        <div class="column done" ondrop="drop(event, 'done')" ondragover="allowDrop(event)">
+            <div class="column-header">
+                <h3>✅ Done</h3>
+                <span class="count" id="count-done">0</span>
+            </div>
+            <div id="done-tasks"></div>
+        </div>
+    </div>
+    
+    <div class="modal" id="taskModal">
+        <div class="modal-content">
+            <h2>New Task</h2>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" id="taskTitle" placeholder="What needs to be done?">
+            </div>
+            <div class="form-group">
+                <label>Project</label>
+                <select id="taskProject">
+                    <option value="cogent">🎯 Cogent (Polymarket Trading)</option>
+                    <option value="agenthq">🤖 AgentHQ/BAiSE</option>
+                    <option value="x402">💰 x402 Paywall</option>
+                    <option value="content">✍️ Content/DevRel</option>
+                    <option value="ops">⚙️ Operations</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Priority</label>
+                <select id="taskPriority">
+                    <option value="revenue">🟢 Revenue</option>
+                    <option value="urgent">🔴 Urgent</option>
+                    <option value="blocked">🟡 Blocked</option>
+                    <option value="normal">⚪ Normal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Notes</label>
+                <textarea id="taskNotes" placeholder="Additional details..."></textarea>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn btn-primary" onclick="addTask()">Add Task</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let tasks = JSON.parse(localStorage.getItem('baised-tasks')) || [
+            { id: 1, title: 'Fix Cogent live-trader POST 403 error', project: 'cogent', priority: 'revenue', status: 'inprogress', date: '2026-02-15' },
+            { id: 2, title: 'Deploy Cogent to persistent hosting', project: 'cogent', priority: 'revenue', status: 'todo', date: '2026-02-15' },
+            { id: 3, title: 'Wire settlePayment in AgentHQ', project: 'agenthq', priority: 'blocked', status: 'backlog', date: '2026-02-14' },
+            { id: 4, title: 'x402 V3 on-chain proof', project: 'x402', priority: 'blocked', status: 'backlog', date: '2026-02-14' },
+        ];
+        
+        let currentFilter = 'all';
+        
+        function renderTasks() {
+            const columns = ['backlog', 'todo', 'inprogress', 'done'];
+            
+            columns.forEach(col => {
+                const container = document.getElementById(`${col}-tasks`);
+                container.innerHTML = '';
+                
+                const colTasks = tasks.filter(t => {
+                    if (t.status !== col) return false;
+                    if (currentFilter === 'all') return true;
+                    return t.project === currentFilter;
+                });
+                
+                document.getElementById(`count-${col}`).textContent = colTasks.length;
+                
+                colTasks.forEach(task => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.draggable = true;
+                    card.ondragstart = (e) => drag(e, task.id);
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <div class="card-title">${task.title}</div>
+                            <button class="card-delete" onclick="deleteTask(${task.id})">×</button>
+                        </div>
+                        <div class="card-meta">
+                            <span class="tag tag-${task.project}">${task.project}</span>
+                            <span class="tag tag-${task.priority}">${task.priority}</span>
+                        </div>
+                        <div class="card-date">${task.date}</div>
+                    `;
+                    container.appendChild(card);
+                });
+            });
+            
+            localStorage.setItem('baised-tasks', JSON.stringify(tasks));
+        }
+        
+        function openModal() {
+            document.getElementById('taskModal').classList.add('active');
+        }
+        
+        function closeModal() {
+            document.getElementById('taskModal').classList.remove('active');
+            document.getElementById('taskTitle').value = '';
+            document.getElementById('taskNotes').value = '';
+        }
+        
+        function addTask() {
+            const title = document.getElementById('taskTitle').value;
+            if (!title) return;
+            
+            const task = {
+                id: Date.now(),
+                title: title,
+                project: document.getElementById('taskProject').value,
+                priority: document.getElementById('taskPriority').value,
+                status: 'backlog',
+                date: new Date().toISOString().split('T')[0]
+            };
+            
+            tasks.push(task);
+            renderTasks();
+            closeModal();
+        }
+        
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            renderTasks();
+        }
+        
+        function filterProject(project) {
+            currentFilter = project;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderTasks();
+        }
+        
+        function drag(ev, taskId) {
+            ev.dataTransfer.setData('taskId', taskId);
+            ev.target.classList.add('dragging');
+        }
+        
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        
+        function drop(ev, newStatus) {
+            ev.preventDefault();
+            const taskId = parseInt(ev.dataTransfer.getData('taskId'));
+            const task = tasks.find(t => t.id === taskId);
+            if (task) {
+                task.status = newStatus;
+                renderTasks();
+            }
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('dragging'));
+        }
+        
+        // Close modal on outside click
+        document.getElementById('taskModal').addEventListener('click', (e) => {
+            if (e.target.id === 'taskModal') closeModal();
+        });
+        
+        // Initial render
+        renderTasks();
+    </script>
+</body>
+</html>
