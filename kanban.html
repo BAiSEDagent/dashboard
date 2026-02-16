@@ -7,61 +7,33 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
-        /* DESIGN SYSTEM - Following ui-design-system skill */
-        :root {
-            /* Background Layers (Dark Theme Formula from color-theory skill) */
-            --bg-layer-0: #0a0a0f;  /* App background */
-            --bg-layer-1: #111118;  /* Cards */
-            --bg-layer-2: #1a1a24;  /* Elevated */
-            --bg-layer-3: #222230;  /* Hover */
-            --bg-layer-4: #2a2a38;  /* Active */
-            
-            /* Text Colors */
-            --text-primary: #fafafa;
-            --text-secondary: #a1a1aa;
-            --text-tertiary: #71717a;
-            
-            /* Borders */
-            --border-default: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(255, 255, 255, 0.12);
-            
-            /* Accents */
-            --accent-blue: #3b82f6;
-            --accent-blue-dark: #2563eb;
-            --accent-green: #10b981;
-            --accent-yellow: #eab308;
-            --accent-red: #ef4444;
-            --accent-purple: #a855f7;
-            
-            /* Spacing (8px grid system) */
-            --space-1: 4px;
-            --space-2: 8px;
-            --space-3: 12px;
-            --space-4: 16px;
-            --space-5: 20px;
-            --space-6: 24px;
-            --space-8: 32px;
-            
-            /* Radius */
-            --radius-sm: 6px;
-            --radius-md: 8px;
-            --radius-lg: 12px;
-            --radius-xl: 16px;
-            
-            /* Shadows */
-            --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
-            --shadow-elevated: 0 4px 12px rgba(0, 0, 0, 0.4);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-primary: #0d0d0d;
+            --bg-secondary: #141414;
+            --bg-tertiary: #1a1a1a;
+            --bg-card: #1e1e1e;
+            --bg-hover: #262626;
+            --border-default: rgba(255, 255, 255, 0.06);
+            --border-hover: rgba(255, 255, 255, 0.12);
+            --text-primary: #fafafa;
+            --text-secondary: #a3a3a3;
+            --text-muted: #737373;
+            --accent-blue: #3b82f6;
+            --accent-green: #22c55e;
+            --accent-yellow: #eab308;
+            --accent-red: #ef4444;
+            --accent-purple: #a855f7;
+        }
+
         html {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-layer-0);
+            background: var(--bg-primary);
             color: var(--text-primary);
             font-size: 14px;
             line-height: 1.5;
@@ -74,21 +46,20 @@
             flex-direction: column;
         }
 
-        /* Navigation - Glassmorphism 2.0 */
+        /* Navigation */
         .nav {
-            background: rgba(17, 17, 24, 0.8);
-            backdrop-filter: blur(20px);
+            background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-default);
             position: sticky;
             top: 0;
-            z-index: 50;
+            z-index: 100;
         }
 
         .nav-inner {
             max-width: 1920px;
             margin: 0 auto;
-            padding: 0 var(--space-8);
-            height: 64px;
+            padding: 0 24px;
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -97,62 +68,65 @@
         .nav-brand {
             display: flex;
             align-items: center;
-            gap: var(--space-3);
+            gap: 12px;
         }
 
         .nav-logo {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            border-radius: var(--radius-md);
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 700;
-            font-size: 16px;
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            font-size: 14px;
         }
 
         .nav-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
-            letter-spacing: -0.02em;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: var(--space-1);
+            gap: 4px;
         }
 
         .nav-link {
-            padding: var(--space-2) var(--space-4);
-            border-radius: var(--radius-md);
-            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 500;
-            color: var(--text-tertiary);
+            color: var(--text-muted);
             text-decoration: none;
             transition: all 0.15s ease;
         }
 
         .nav-link:hover {
             color: var(--text-secondary);
-            background: var(--bg-layer-3);
+            background: var(--bg-tertiary);
         }
 
         .nav-link.active {
             color: var(--text-primary);
-            background: var(--bg-layer-3);
+            background: var(--bg-tertiary);
         }
 
-        /* Buttons */
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .btn {
             display: inline-flex;
             align-items: center;
-            gap: var(--space-2);
-            padding: 10px 18px;
-            border-radius: var(--radius-md);
-            font-size: 14px;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s ease;
@@ -162,7 +136,7 @@
         }
 
         .btn:hover {
-            background: var(--bg-layer-3);
+            background: var(--bg-tertiary);
             color: var(--text-primary);
         }
 
@@ -170,66 +144,46 @@
             background: var(--accent-green);
             color: #000;
             font-weight: 600;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
         }
 
         .btn-primary:hover {
+            background: #16a34a;
             transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
         }
 
-        /* Subheader */
-        .subheader {
-            background: var(--bg-layer-1);
+        /* Filters */
+        .filters-bar {
+            background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-default);
-            padding: var(--space-4) var(--space-8);
+            padding: 12px 24px;
         }
 
-        .subheader-inner {
+        .filters-inner {
             max-width: 1920px;
             margin: 0 auto;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            gap: 8px;
         }
 
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-            font-size: 14px;
-            color: var(--text-tertiary);
-        }
-
-        .breadcrumb-current {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-
-        .filters {
-            display: flex;
-            align-items: center;
-            gap: var(--space-2);
-        }
-
-        .filter-chip {
+        .filter-btn {
             padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
+            border-radius: 16px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.15s ease;
-            background: var(--bg-layer-2);
+            background: transparent;
             border: 1px solid var(--border-default);
-            color: var(--text-tertiary);
+            color: var(--text-muted);
         }
 
-        .filter-chip:hover {
+        .filter-btn:hover {
             border-color: var(--border-hover);
             color: var(--text-secondary);
         }
 
-        .filter-chip.active {
+        .filter-btn.active {
             background: var(--accent-blue);
             border-color: var(--accent-blue);
             color: white;
@@ -238,44 +192,43 @@
         /* Main Board */
         .main {
             flex: 1;
-            padding: var(--space-6) var(--space-8);
+            padding: 20px 24px;
             overflow-x: auto;
-            background: var(--bg-layer-0);
+            background: var(--bg-primary);
         }
 
         .board {
             display: flex;
-            gap: var(--space-5);
+            gap: 16px;
             min-width: max-content;
             max-width: 1920px;
             margin: 0 auto;
         }
 
-        /* Columns - Card Design from ui-design-system skill */
+        /* Columns */
         .column {
-            width: 340px;
+            width: 300px;
             flex-shrink: 0;
             display: flex;
             flex-direction: column;
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-xl);
-            max-height: calc(100vh - 180px);
-            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            max-height: calc(100vh - 140px);
         }
 
         .column-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: var(--space-5);
+            padding: 14px 16px;
             border-bottom: 1px solid var(--border-default);
         }
 
         .column-title {
             display: flex;
             align-items: center;
-            gap: var(--space-3);
+            gap: 8px;
         }
 
         .status-dot {
@@ -284,21 +237,10 @@
             border-radius: 50%;
         }
 
-        .column[data-status="backlog"] .status-dot { 
-            background: var(--text-tertiary); 
-        }
-        .column[data-status="todo"] .status-dot { 
-            background: var(--accent-blue); 
-            box-shadow: 0 0 8px var(--accent-blue);
-        }
-        .column[data-status="inprogress"] .status-dot { 
-            background: var(--accent-yellow); 
-            box-shadow: 0 0 8px var(--accent-yellow);
-        }
-        .column[data-status="done"] .status-dot { 
-            background: var(--accent-green); 
-            box-shadow: 0 0 8px var(--accent-green);
-        }
+        .column[data-status="backlog"] .status-dot { background: var(--text-muted); }
+        .column[data-status="todo"] .status-dot { background: var(--accent-blue); box-shadow: 0 0 6px var(--accent-blue); }
+        .column[data-status="inprogress"] .status-dot { background: var(--accent-yellow); box-shadow: 0 0 6px var(--accent-yellow); }
+        .column[data-status="done"] .status-dot { background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); }
 
         .column-name {
             font-size: 12px;
@@ -310,183 +252,88 @@
 
         .column-count {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--text-tertiary);
-            background: var(--bg-layer-2);
-            padding: 4px 10px;
-            border-radius: 12px;
-            min-width: 28px;
-            text-align: center;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 3px 8px;
+            border-radius: 10px;
         }
 
         .column-content {
             flex: 1;
             overflow-y: auto;
-            padding: var(--space-4);
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            gap: var(--space-3);
+            gap: 10px;
         }
 
-        .column-content::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .column-content::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .column-content::-webkit-scrollbar-thumb {
-            background: var(--bg-layer-3);
-            border-radius: 3px;
-        }
-
-        /* Task Cards - Following Card Design pattern */
+        /* Task Cards */
         .task-card {
-            background: var(--bg-layer-1);
+            background: var(--bg-card);
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-lg);
-            padding: var(--space-4);
+            border-radius: 8px;
+            padding: 14px;
             cursor: grab;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
         }
 
         .task-card:hover {
             border-color: var(--border-hover);
-            box-shadow: var(--shadow-elevated);
-            transform: translateY(-2px);
-            background: var(--bg-layer-2);
+            background: var(--bg-hover);
         }
 
         .task-card.dragging {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: grabbing;
         }
 
-        .task-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: var(--space-3);
-            margin-bottom: var(--space-3);
-        }
-
         .task-title {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-primary);
             line-height: 1.5;
-            flex: 1;
+            margin-bottom: 10px;
         }
 
-        .task-delete {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            color: var(--text-tertiary);
-            opacity: 0;
-            transition: all 0.15s ease;
-        }
-
-        .task-card:hover .task-delete {
-            opacity: 1;
-        }
-
-        .task-delete:hover {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--accent-red);
-        }
-
-        /* Badges - Status Badge pattern */
         .task-badges {
             display: flex;
             flex-wrap: wrap;
-            gap: var(--space-2);
-            margin-bottom: var(--space-3);
+            gap: 6px;
+            margin-bottom: 10px;
         }
 
         .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
             text-transform: uppercase;
             letter-spacing: 0.3px;
-            border: 1px solid transparent;
         }
 
-        .badge-cogent { 
-            background: rgba(59, 130, 246, 0.1); 
-            color: #60a5fa; 
-            border-color: rgba(59, 130, 246, 0.2);
-        }
-        .badge-agenthq { 
-            background: rgba(168, 85, 247, 0.1); 
-            color: #c084fc; 
-            border-color: rgba(168, 85, 247, 0.2);
-        }
-        .badge-x402 { 
-            background: rgba(234, 179, 8, 0.1); 
-            color: #facc15; 
-            border-color: rgba(234, 179, 8, 0.2);
-        }
-        .badge-content { 
-            background: rgba(163, 163, 163, 0.1); 
-            color: #d4d4d8; 
-            border-color: rgba(163, 163, 163, 0.2);
-        }
-        .badge-ops { 
-            background: rgba(113, 113, 122, 0.1); 
-            color: #a1a1aa; 
-            border-color: rgba(113, 113, 122, 0.2);
-        }
+        .badge-cogent { background: rgba(59, 130, 246, 0.12); color: #60a5fa; }
+        .badge-agenthq { background: rgba(168, 85, 247, 0.12); color: #c084fc; }
+        .badge-x402 { background: rgba(234, 179, 8, 0.12); color: #fbbf24; }
+        .badge-content { background: rgba(163, 163, 163, 0.12); color: #d4d4d8; }
+        .badge-ops { background: rgba(115, 115, 115, 0.12); color: #a3a3a3; }
 
-        .badge-revenue { 
-            background: rgba(16, 185, 129, 0.1); 
-            color: #4ade80; 
-            border-color: rgba(16, 185, 129, 0.2);
-        }
-        .badge-urgent { 
-            background: rgba(239, 68, 68, 0.1); 
-            color: #f87171; 
-            border-color: rgba(239, 68, 68, 0.2);
-        }
-        .badge-blocked { 
-            background: rgba(234, 179, 8, 0.1); 
-            color: #facc15; 
-            border-color: rgba(234, 179, 8, 0.2);
-        }
-        .badge-normal { 
-            background: rgba(82, 82, 82, 0.2); 
-            color: #a1a1aa; 
-            border-color: rgba(82, 82, 82, 0.3);
-        }
+        .badge-revenue { background: rgba(34, 197, 94, 0.12); color: #4ade80; }
+        .badge-urgent { background: rgba(239, 68, 68, 0.12); color: #f87171; }
+        .badge-blocked { background: rgba(234, 179, 8, 0.12); color: #fbbf24; }
+        .badge-normal { background: rgba(82, 82, 82, 0.2); color: #a3a3a3; }
 
         .task-footer {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-top: var(--space-3);
-            border-top: 1px solid var(--border-default);
+            font-size: 11px;
+            color: var(--text-muted);
         }
 
         .task-id {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 11px;
-            color: var(--text-tertiary);
-        }
-
-        .task-date {
-            font-size: 12px;
-            color: var(--text-tertiary);
         }
 
         /* Modal */
@@ -494,12 +341,12 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(8px);
-            z-index: 100;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
             align-items: center;
             justify-content: center;
-            padding: var(--space-6);
+            padding: 24px;
         }
 
         .modal-overlay.active {
@@ -507,55 +354,51 @@
         }
 
         .modal {
-            background: var(--bg-layer-1);
+            background: var(--bg-secondary);
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-xl);
+            border-radius: 12px;
             width: 100%;
-            max-width: 480px;
-            box-shadow: var(--shadow-elevated);
-            animation: modalIn 0.25s ease;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.96); }
-            to { opacity: 1; transform: scale(1); }
+            max-width: 440px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
         }
 
         .modal-header {
-            padding: var(--space-6) var(--space-6) 0;
+            padding: 20px 20px 0;
         }
 
         .modal-header h2 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
         }
 
         .modal-body {
-            padding: var(--space-6);
+            padding: 20px;
         }
 
         .field {
-            margin-bottom: var(--space-5);
+            margin-bottom: 16px;
         }
 
         .field label {
             display: block;
-            margin-bottom: var(--space-2);
-            font-size: 13px;
+            margin-bottom: 6px;
+            font-size: 12px;
             font-weight: 500;
             color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
         }
 
         .field input,
         .field textarea,
         .field select {
             width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-layer-0);
+            padding: 10px 12px;
+            background: var(--bg-tertiary);
             border: 1px solid var(--border-default);
-            border-radius: var(--radius-md);
+            border-radius: 6px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 13px;
             transition: all 0.15s ease;
         }
 
@@ -564,25 +407,23 @@
         .field select:focus {
             outline: none;
             border-color: var(--accent-blue);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .field textarea {
-            min-height: 100px;
+            min-height: 80px;
             resize: vertical;
         }
 
         .modal-footer {
             display: flex;
             justify-content: flex-end;
-            gap: var(--space-3);
-            padding: 0 var(--space-6) var(--space-6);
+            gap: 10px;
+            padding: 0 20px 20px;
         }
 
-        /* Drag states */
         .column-content.drag-over {
             background: rgba(59, 130, 246, 0.05);
-            border-radius: var(--radius-md);
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -591,7 +432,7 @@
         <div class="nav-inner">
             <div class="nav-brand">
                 <div class="nav-logo">B</div>
-                <span class="nav-title">BAiSED Command Center</span>
+                <span class="nav-title">BAiSED</span>
             </div>
             <div class="nav-links">
                 <a href="#" class="nav-link active">Mission Control</a>
@@ -601,24 +442,20 @@
                 <a href="#" class="nav-link">Payments</a>
                 <a href="#" class="nav-link">Workflows</a>
             </div>
-            <button class="btn btn-primary" onclick="openModal()">+ New Task</button>
+            <div class="nav-actions">
+                <button class="btn btn-primary" onclick="openModal()">+ New Task</button>
+            </div>
         </div>
     </nav>
 
-    <div class="subheader">
-        <div class="subheader-inner">
-            <div class="breadcrumb">
-                <span>Projects</span>
-                <span>/</span>
-                <span class="breadcrumb-current">Active Development</span>
-            </div>
-            <div class="filters">
-                <div class="filter-chip active" onclick="filterBy('all')">All</div>
-                <div class="filter-chip" onclick="filterBy('cogent')">🎯 Cogent</div>
-                <div class="filter-chip" onclick="filterBy('agenthq')">🤖 AgentHQ</div>
-                <div class="filter-chip" onclick="filterBy('x402')">💰 x402</div>
-                <div class="filter-chip" onclick="filterBy('content')">✍️ Content</div>
-            </div>
+    <div class="filters-bar">
+        <div class="filters-inner">
+            <button class="filter-btn active" onclick="filterBy('all')">All</button>
+            <button class="filter-btn" onclick="filterBy('cogent')">🎯 Cogent</button>
+            <button class="filter-btn" onclick="filterBy('agenthq')">🤖 AgentHQ</button>
+            <button class="filter-btn" onclick="filterBy('x402')">💰 x402</button>
+            <button class="filter-btn" onclick="filterBy('content')">✍️ Content</button>
+            <button class="filter-btn" onclick="filterBy('ops')">⚙️ Ops</button>
         </div>
     </div>
 
@@ -677,17 +514,17 @@
             </div>
             <div class="modal-body">
                 <div class="field">
-                    <label>Task Title</label>
+                    <label>Title</label>
                     <input type="text" id="taskTitle" placeholder="What needs to be done?" autofocus>
                 </div>
                 <div class="field">
                     <label>Project</label>
                     <select id="taskProject">
-                        <option value="cogent">🎯 Cogent (Polymarket Trading)</option>
-                        <option value="agenthq">🤖 AgentHQ / BAiSE</option>
-                        <option value="x402">💰 x402 Paywall</option>
-                        <option value="content">✍️ Content / DevRel</option>
-                        <option value="ops">⚙️ Operations</option>
+                        <option value="cogent">🎯 Cogent</option>
+                        <option value="agenthq">🤖 AgentHQ</option>
+                        <option value="x402">💰 x402</option>
+                        <option value="content">✍️ Content</option>
+                        <option value="ops">⚙️ Ops</option>
                     </select>
                 </div>
                 <div class="field">
@@ -701,31 +538,29 @@
                 </div>
                 <div class="field">
                     <label>Notes</label>
-                    <textarea id="taskNotes" placeholder="Additional context, links, requirements..."></textarea>
+                    <textarea id="taskNotes" placeholder="Additional context..."></textarea>
                 </div>
             </div>
             <div class="modal-footer">
                 <button class="btn" onclick="closeModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="addTask()">Create Task</button>
+                <button class="btn btn-primary" onclick="addTask()">Create</button>
             </div>
         </div>
     </div>
 
     <script>
         let tasks = JSON.parse(localStorage.getItem('baised-tasks')) || [
-            { id: 1, title: 'Fix Cogent live-trader POST 403 error', project: 'cogent', priority: 'urgent', status: 'inprogress', date: '2026-02-15', notes: 'VPN clears GETs but order placement returns 403' },
-            { id: 2, title: 'Deploy Cogent to EU hosting (Railway)', project: 'cogent', priority: 'revenue', status: 'todo', date: '2026-02-15', notes: 'EU region to bypass VPN blocks' },
-            { id: 3, title: 'First live trade on Polymarket', project: 'cogent', priority: 'revenue', status: 'backlog', date: '2026-02-15', notes: '$5 test order to verify end-to-end' },
-            { id: 4, title: 'Wire settlePayment in AgentHQ', project: 'agenthq', priority: 'blocked', status: 'backlog', date: '2026-02-14', notes: 'Publisher flagged as critical' },
-            { id: 5, title: 'x402 V3 on-chain proof', project: 'x402', priority: 'blocked', status: 'backlog', date: '2026-02-14', notes: 'Facilitator integration needed' },
+            { id: 1, title: 'Fix Cogent live-trader POST 403 error', project: 'cogent', priority: 'urgent', status: 'inprogress', date: '2026-02-15' },
+            { id: 2, title: 'Deploy Cogent to EU hosting', project: 'cogent', priority: 'revenue', status: 'todo', date: '2026-02-15' },
+            { id: 3, title: 'First live trade on Polymarket', project: 'cogent', priority: 'revenue', status: 'backlog', date: '2026-02-15' },
+            { id: 4, title: 'Wire settlePayment in AgentHQ', project: 'agenthq', priority: 'blocked', status: 'backlog', date: '2026-02-14' },
+            { id: 5, title: 'x402 V3 on-chain proof', project: 'x402', priority: 'blocked', status: 'backlog', date: '2026-02-14' },
         ];
 
         let currentFilter = 'all';
 
         function renderTasks() {
-            const columns = ['backlog', 'todo', 'inprogress', 'done'];
-            
-            columns.forEach(col => {
+            ['backlog', 'todo', 'inprogress', 'done'].forEach(col => {
                 const container = document.getElementById(`${col}-tasks`);
                 container.innerHTML = '';
                 
@@ -743,28 +578,19 @@
                     card.draggable = true;
                     card.ondragstart = (e) => drag(e, task.id);
                     card.innerHTML = `
-                        <div class="task-header">
-                            <div class="task-title">${escapeHtml(task.title)}</div>
-                            <div class="task-delete" onclick="deleteTask(${task.id})">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <line x1="18" y1="6" x2="6" y2="18"/>
-                                    <line x1="6" y1="6" x2="18" y2="18"/>
-                                </svg>
-                            </div>
-                        </div>
+                        <div class="task-title">${escapeHtml(task.title)}</div>
                         <div class="task-badges">
                             <span class="badge badge-${task.project}">${task.project}</span>
                             <span class="badge badge-${task.priority}">${task.priority}</span>
                         </div>
                         <div class="task-footer">
                             <span class="task-id">#${task.id.toString().slice(-4)}</span>
-                            <span class="task-date">${formatDate(task.date)}</span>
+                            <span>${formatDate(task.date)}</span>
                         </div>
                     `;
                     container.appendChild(card);
                 });
             });
-            
             localStorage.setItem('baised-tasks', JSON.stringify(tasks));
         }
 
@@ -803,25 +629,19 @@
                 project: document.getElementById('taskProject').value,
                 priority: document.getElementById('taskPriority').value,
                 status: 'backlog',
-                date: new Date().toISOString().split('T')[0],
-                notes: document.getElementById('taskNotes').value
+                date: new Date().toISOString().split('T')[0]
             });
             
             renderTasks();
             closeModal();
         }
 
-        function deleteTask(id) {
-            tasks = tasks.filter(t => t.id !== id);
-            renderTasks();
-        }
-
         function filterBy(project) {
             currentFilter = project;
-            document.querySelectorAll('.filter-chip').forEach(chip => {
-                chip.classList.toggle('active', 
-                    (project === 'all' && chip.textContent === 'All') ||
-                    chip.textContent.toLowerCase().includes(project)
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('active', 
+                    (project === 'all' && btn.textContent === 'All') ||
+                    btn.textContent.toLowerCase().includes(project)
                 );
             });
             renderTasks();
