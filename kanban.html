@@ -576,28 +576,657 @@
         const STATUSES = ['backlog', 'inprogress', 'blocked', 'review', 'done'];
 
         let cards = JSON.parse(localStorage.getItem('baised-kanban-v2')) || [
-            { id: 1, title: 'BNB Chain Hackathon Entry', desc: 'Good Vibes Only: OpenClaw. $100k prize pool, 10 winners. Nee…', status: 'backlog', priority: 'red', assignee: 'baised', warning: '⚠ Need to verify BSC USDC supports EIP-3009', link: '' },
-            { id: 2, title: 'Build buyer-side OpenClaw skill', desc: 'Skill wrapping session creation + service discovery + auto-payment…', status: 'backlog', priority: 'green', assignee: 'baised', warning: '', link: '' },
-            { id: 3, title: 'LLM proxy with sessions', desc: 'Killer integration: LLM API proxy that uses x402 sessions for…', status: 'backlog', priority: 'yellow', assignee: 'baised', warning: '', link: '' },
-            { id: 4, title: 'Get listed on x402.org ecosystem', desc: 'Submit x402-sessions for listing on x402.org/ecosystem and Circle…', status: 'backlog', priority: 'green', assignee: 'adam', warning: '⚠ Need npm published first', link: 'https://x402.org' },
-            { id: 5, title: 'MrBeast $1M puzzle', desc: 'Analyze videos + BTS photos from mrbeast.salesforce.com. Pull…', status: 'backlog', priority: 'green', assignee: 'baised', warning: '⚠ Paused until Adam is off work', link: 'https://mrbeast.com' },
-            { id: 6, title: 'Kanban board', desc: 'Local kanban with API endpoints for agent programmatic access.', status: 'inprogress', priority: 'green', assignee: 'baised', warning: '', link: '' },
-            { id: 7, title: 'npm publish @baised/x402-sessions', desc: 'Publish v0.2.0 to npm. Package built & audited, ready to ship.', status: 'blocked', priority: 'red', assignee: 'baised', warning: '⚠ Waiting on npm auth token from Adam', link: 'https://npmjs.com' },
-            { id: 8, title: 'Twitter API access', desc: 'Get bearer token configured for @BAiSEDagent account.', status: 'blocked', priority: 'yellow', assignee: 'adam', warning: '⚠ No bearer token', link: '' },
-            { id: 9, title: 'x402-sessions v0.2.0', desc: 'Hooks-first architecture, 6 audit rounds, 2942 lines. Native x402…', status: 'done', priority: 'red', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/x402-sessions' },
-            { id: 10, title: 'Security audit (6 rounds)', desc: '7C/5H/6M/5L initial + 5-agent parallel audit. All findings…', status: 'done', priority: 'green', assignee: 'baised', warning: '', link: '' },
-            { id: 11, title: 'Business model + publisher validation', desc: '3-layer model: SDK (free) → Hosted Gateway (1%) → AgentHQ (2%)…', status: 'done', priority: 'yellow', assignee: 'baised', warning: '', link: '' },
-            { id: 12, title: 'x402-paywall OpenClaw skill', desc: 'HTTP 402 payment gating for any OpenClaw skill or endpoint. Define price in USDC — agent won\'t execute until payment clears on Base. Monetization layer for the entire OpenClaw ecosystem.', status: 'backlog', priority: 'red', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/x402-paywall-skill' },
-            { id: 13, title: 'Builder Order Attribution', desc: 'Attach builder headers to every Polygent order for fee share + leaderboard. Builder API key ready. Unlocks $25k/week prize pool. Highest revenue priority — no external blockers.', status: 'backlog', priority: 'red', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/cogent' },
-            { id: 14, title: 'Polygent WebSocket Feed', desc: 'Replace 30s REST polling with Polymarket live WS streams. Price ticks, order fills, market events — all real-time. Priority after builder attribution ships.', status: 'backlog', priority: 'yellow', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/cogent' },
-            { id: 15, title: 'Polygent SQLite Persistence', desc: 'Wire db.ts into AgentStore + TradeStore. Schema + migration layer already built in src/core/db.ts. In-memory stores lose all data on restart — needs to be wired up.', status: 'backlog', priority: 'yellow', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/cogent' },
-            { id: 16, title: 'AgentHQ settlePayment', desc: 'Wire settlePayment into AgentHQ/BAiSE core loop. Flagged CRITICAL by Publisher. Phase 1 arbitration escrow depends on this. Stale for 6+ days.', status: 'blocked', priority: 'red', assignee: 'baised', warning: '⚠ CRITICAL — stale 6+ days, unblocking needed', link: 'https://github.com/BAiSEDagent/agenthq' },
-            { id: 17, title: 'Figma MCP Server Setup', desc: 'Connect Figma MCP server to OpenClaw. Enables Claude Code → Figma canvas roundtrip. 10 min setup once token is provided.', status: 'blocked', priority: 'yellow', assignee: 'adam', warning: '⚠ Waiting on Figma personal access token from Adam', link: 'https://www.figma.com/blog/introducing-figma-mcp-server/' },
-            { id: 18, title: 'Mission Control', desc: 'Custom Next.js + Convex app: Tasks board, Content pipeline, Calendar/cron visibility, Memory browser with global search. Queue after Polygent revenue is flowing.', status: 'backlog', priority: 'green', assignee: 'baised', warning: '⚠ Queue after Polygent builder attribution ships', link: '' },
-            { id: 19, title: 'Polygent Security Audit Fixes', desc: '7 priority items fixed: CORS hardening, AES-256-GCM key store encryption, SQLite persistence layer, config override validation, trade source tagging, sanitizeObject depth limit. 39 tests passing.', status: 'done', priority: 'green', assignee: 'baised', warning: '', link: 'https://github.com/BAiSEDagent/cogent/commit/639f247' },
-            { id: 20, title: 'Directory Business — Niche Research', desc: 'Find the right niche for an AI-built directory play. Data moat is the key. Candidates: MCP server directory, Prediction Agent directory (Polygent-powered), Base builder directory. Need: programmatic data access + high-intent users + x402 monetization. Ref: Frey Chu built luxury restroom trailer dir in 4 days for under $250.', status: 'backlog', priority: 'yellow', assignee: 'baised', warning: '', link: 'https://www.youtube.com/watch?v=I_wbc5ND79o' },
-            { id: 21, title: 'Base Batches 003 Application', desc: 'Startup Track: pre-seed, raised <$250k. Top 15 get $10k grant + 8-week program. Min 3 teams get $50k from Base Ecosystem Fund. All considered for Coinbase Ventures. 500-word paper drafted. Need to submit at batches.base.org. Deadline March 9.', status: 'backlog', priority: 'red', assignee: 'adam', warning: '⚠ Deadline March 9 — 18 days', link: 'https://batches.base.org/' },
-        ];
+          {
+                    "id": 1772133927229,
+                    "title": "[Polygent] Treasury Multisig",
+                    "desc": "Adam deploys Gnosis Safe for builder fee revenue (30 min, see TREASURY_SETUP.md)",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927230,
+                    "title": "[Polygent] Signature Verification Audit",
+                    "desc": "✅ COMPLETE (see SECURITY_AUDIT.md) — Zero-custody verified",
+                    "status": "done",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927231,
+                    "title": "[Polygent] Rate Limit Stress Test",
+                    "desc": "Simulate 100 orders/sec, test IP rotation bypass",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927232,
+                    "title": "[Polygent] Monitoring Setup",
+                    "desc": "UptimeRobot + Sentry for error tracking",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927233,
+                    "title": "[Polygent] Live Intel Feed",
+                    "desc": "Connect dashboard to `trades` table for real-time activity",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927234,
+                    "title": "[Polygent] Sovereign Dashboard",
+                    "desc": "Create `/dashboard/:agentId` for external agent stats",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927235,
+                    "title": "[Polygent] Auto-Redeem Core Logic",
+                    "desc": "Implement settlement detection + CTF redemption (2-4h)",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927236,
+                    "title": "[Polygent] Order Signing SDK",
+                    "desc": "JavaScript library (not just curl examples)",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927237,
+                    "title": "[Polygent] Sandbox Mode",
+                    "desc": "Testnet relay or paper trading for new agents",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927238,
+                    "title": "[Polygent] Error Messages",
+                    "desc": "Add troubleshooting guide for \"not enough balance\" errors",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927239,
+                    "title": "[Polygent] Monitoring Setup",
+                    "desc": "Datadog/Sentry for error tracking",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927240,
+                    "title": "[Polygent] Uptime Alerts",
+                    "desc": "UptimeRobot + Discord/Telegram notifications",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927241,
+                    "title": "[Polygent] Webhook Support",
+                    "desc": "POST to agent callback URLs when orders fill",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927242,
+                    "title": "[Polygent] Fee Claiming",
+                    "desc": "Automate Polymarket builder payout claims",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927243,
+                    "title": "[Polygent] Exit Guide",
+                    "desc": "\"How to Close Positions\" in ONBOARDING_V2.md",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927244,
+                    "title": "[Polygent] API Documentation",
+                    "desc": "OpenAPI spec for `/api/*` endpoints",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927245,
+                    "title": "[Polygent] Video Tutorial",
+                    "desc": "5-min walkthrough of agent registration + first trade",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927246,
+                    "title": "[Polygent] Agent Leaderboard",
+                    "desc": "Public opt-in leaderboard for external agents",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927247,
+                    "title": "[Polygent] Volume Dashboard",
+                    "desc": "Which agents drive most volume? Which markets?",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927248,
+                    "title": "[Polygent] Revenue Projections",
+                    "desc": "Builder fee forecasting based on current volume",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927249,
+                    "title": "[Polygent] Backup Relay",
+                    "desc": "Deploy 2nd VPS for redundancy",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927250,
+                    "title": "[Polygent] Database Backups",
+                    "desc": "Daily snapshots of `data/polygent.db`",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927251,
+                    "title": "[Polygent] CDN for Frontend",
+                    "desc": "Cloudflare + edge caching",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927252,
+                    "title": "[Polygent] Rev-Share Contracts",
+                    "desc": "Pay agents % of builder fees they generate",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927253,
+                    "title": "[Polygent] Strategy Marketplace",
+                    "desc": "Let agents sell their strategies",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927254,
+                    "title": "[Polygent] Copy Trading",
+                    "desc": "Let users follow top agents",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927255,
+                    "title": "[Polygent] Multi-Chain",
+                    "desc": "Expand beyond Polygon (Arbitrum, Optimism, Base)",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927256,
+                    "title": "[Polygent] Backtesting API",
+                    "desc": "Test strategies against historical data",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927257,
+                    "title": "[Polygent] Paper Trading UI",
+                    "desc": "Web-based strategy simulator",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927258,
+                    "title": "[Polygent] Agent SDK",
+                    "desc": "npm package for order signing + relay",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927259,
+                    "title": "[Polygent] Market Discovery API",
+                    "desc": "`/api/markets/soonest` + `/recommended` with agent-friendly scoring",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927260,
+                    "title": "[Polygent] Auto-Redeem Scaffold",
+                    "desc": "Database migration + API endpoint + background service (core logic pending)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927261,
+                    "title": "[Polygent] Market Filtering Fix",
+                    "desc": "Parse tokenIds from multiple formats + exclude expired markets",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927262,
+                    "title": "[Polygent] API Documentation",
+                    "desc": "New API_REFERENCE.md with examples",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927263,
+                    "title": "[Polygent] Test Coverage",
+                    "desc": "7 market-scoring tests (all passing)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927264,
+                    "title": "[Polygent] Quality Audit",
+                    "desc": "Comprehensive onboarding feature audit (ONBOARDING_AUDIT_2026-02-26.md)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927265,
+                    "title": "[Polygent] Security Audit",
+                    "desc": "Comprehensive signature + custody verification (SECURITY_AUDIT.md)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927266,
+                    "title": "[Polygent] Live Intel Feed",
+                    "desc": "Dashboard now shows real trades from database (`/api/activity/live`)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927267,
+                    "title": "[Polygent] Development Kanban",
+                    "desc": "Full project task tracking (KANBAN.md)",
+                    "status": "done",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/polygent"
+          },
+          {
+                    "id": 1772133927391,
+                    "title": "[MIRROR] End-to-End Copy-Trade Test",
+                    "desc": "Connect wallet → MIRROR button → sign tx → verify onchain",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927392,
+                    "title": "[MIRROR] Base App Submission",
+                    "desc": "Submit manifest to Coinbase Base App directory",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927393,
+                    "title": "[MIRROR] Alchemy Trade Feed Verification",
+                    "desc": "Confirm real-time trade detection works",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927394,
+                    "title": "[MIRROR] Error Handling",
+                    "desc": "Toast notifications for failed txs",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927395,
+                    "title": "[MIRROR] Mobile Responsive",
+                    "desc": "Test on iPhone/Android via Base wallet",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927396,
+                    "title": "[MIRROR] Trade History UI",
+                    "desc": "Show past mirrored trades",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927397,
+                    "title": "[MIRROR] Settings Panel",
+                    "desc": "Max slippage, auto-approve toggle",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927398,
+                    "title": "[MIRROR] Analytics",
+                    "desc": "Track copy-trade success rate",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927399,
+                    "title": "[MIRROR] Multi-User Support",
+                    "desc": "Follow multiple traders",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927400,
+                    "title": "[MIRROR] Custom Filters",
+                    "desc": "Only mirror trades >$1k",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927401,
+                    "title": "[MIRROR] Social Proof",
+                    "desc": "Show \"X users mirroring this trader\"",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/mirror-miniapp"
+          },
+          {
+                    "id": 1772133927432,
+                    "title": "[x402-sessions] npm Token",
+                    "desc": "Obtain publish credentials for @x402/sessions",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927433,
+                    "title": "[x402-sessions] C-1: Signature Replay",
+                    "desc": "Add nonce/timestamp to prevent replay attacks",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927434,
+                    "title": "[x402-sessions] C-2: Rate Limiting",
+                    "desc": "Implement per-IP/per-wallet DOS protection",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927435,
+                    "title": "[x402-sessions] Security Audit Fixes",
+                    "desc": "Address 7 CRITICAL + 5 HIGH issues",
+                    "status": "backlog",
+                    "priority": "red",
+                    "assignee": "baised",
+                    "warning": "🔴 CRITICAL",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927436,
+                    "title": "[x402-sessions] Test Coverage",
+                    "desc": "Unit tests for all core functions",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927437,
+                    "title": "[x402-sessions] Documentation",
+                    "desc": "API reference + integration guide",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927438,
+                    "title": "[x402-sessions] Example App",
+                    "desc": "Demo Next.js app with x402-sessions",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927439,
+                    "title": "[x402-sessions] CI/CD",
+                    "desc": "GitHub Actions for automated testing + publish",
+                    "status": "backlog",
+                    "priority": "yellow",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927440,
+                    "title": "[x402-sessions] TypeScript Types",
+                    "desc": "Export proper `.d.ts` files",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927441,
+                    "title": "[x402-sessions] Middleware Variants",
+                    "desc": "Express, Fastify, Hono adapters",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927442,
+                    "title": "[x402-sessions] Admin Dashboard",
+                    "desc": "View active sessions, revenue stats",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927443,
+                    "title": "[x402-sessions] Webhook Support",
+                    "desc": "Notify on payment events",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927444,
+                    "title": "[x402-sessions] Multi-Chain Support",
+                    "desc": "Polygon, Arbitrum, Optimism",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927445,
+                    "title": "[x402-sessions] Subscription Billing",
+                    "desc": "Recurring payment sessions",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          },
+          {
+                    "id": 1772133927446,
+                    "title": "[x402-sessions] Fiat On-Ramp",
+                    "desc": "Stripe/Moonpay integration for non-crypto users",
+                    "status": "backlog",
+                    "priority": "green",
+                    "assignee": "baised",
+                    "warning": "",
+                    "link": "https://github.com/BAiSEDagent/x402-sessions"
+          }
+];
 
         let commsLog = JSON.parse(localStorage.getItem('baised-comms')) || [
             { sender: 'system', time: now(), text: 'Board initialized with current task state' },
